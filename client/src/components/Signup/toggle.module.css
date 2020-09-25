@@ -1,0 +1,46 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.loginpage {
+  width: 560px;
+  padding: 8% 0 0;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.form:hover {
+  transform: scale(1.2);
+  transition: all ease-in-out 0.2s;
+}
+
+.form {
+  background: #ffffff;
+  width: 50%;
+  margin: 20px;
+  /* margin: 0 auto 100px; */
+  padding: 55px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+body {
+  background: #010a25; /* fallback for old browsers */
+  background: -webkit-linear-gradient(45deg, #a5bcd1, #57aeff);
+  background: -moz-linear-gradient(45deg, #a5bcd1, #57aeff);
+  background: -o-linear-gradient(45deg, #a5bcd1, #57aeff);
+  background: linear-gradient(to right, #111b25, #020c14);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.admin img {
+  height: 50px;
+  width: 50px;
+}
+
+.user img {
+  height: 50px;
+  width: 50px;
+}
