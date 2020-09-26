@@ -50,7 +50,7 @@ function Signin({ getUser }) {
             classes: "#43a047 green darken-1",
           });
           getUser(data.user);
-          history.push("/");
+          history.push("/user");
         }
       });
   };

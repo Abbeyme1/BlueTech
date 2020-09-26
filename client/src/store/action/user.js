@@ -6,3 +6,9 @@ export const user = (data) => {
     payload: data,
   };
 };
+
+export const clear = () => {
+  return {
+    type: actionTypes.CLEAR,
+  };
+};

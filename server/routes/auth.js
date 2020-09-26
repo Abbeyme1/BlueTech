@@ -29,29 +29,28 @@ router.post("/signup", (req, res) => {
     return res.status(422).json({ error: "Please Enter All the Fields" });
   }
 
-  User.findOne({ email: email }).then((user) => {
-    if (user) {
-      return res
-        .status(422)
-        .json({ error: "User already exists with that email address" });
-    }
-  });
+  User.findOne({ email: email })
+    .then((user) => {
+      if (user) {
+        return res
+          .status(422)
+          .json({ error: "User already exists with that email address" });
+      }
 
-  // HERE WE WILL START CREATING A USER WITH GIVEN INFO
+      // HERE WE WILL START CREATING A USER WITH GIVEN INFO
 
-  // > FIRST WE WILL ENCRPT PASSWORD
-  //  AND THEN WE WILL CREATE USER
-  bcrypt
-    .hash(password, 10)
-    .then((hash) => {
-      const user = new User({
-        name,
-        email,
-        password: hash,
-      });
+      // > FIRST WE WILL ENCRPT PASSWORD
+      //  AND THEN WE WILL CREATE USER
+      bcrypt.hash(password, 10).then((hash) => {
+        const user = new User({
+          name,
+          email,
+          password: hash,
+        });
 
-      user.save().then((user) => {
-        res.json({ message: "saved successfully" });
+        user.save().then((user) => {
+          res.json({ message: "saved successfully" });
+        });
       });
     })
     .catch((error) => console.log(error));
@@ -72,6 +71,9 @@ router.post("/signin", (req, res) => {
       .compare(password, user.password)
       .then((match) => {
         if (match) {
+          // const lastLogin = user.lastLogin;
+          user.lastLogin = Date.now();
+          user.save();
           var token = jwt.sign({ _id: user._id }, JWT_SECRET);
           const { _id, name, email, points, lastLogin } = user;
           res.json({ token, user: { _id, name, email, points, lastLogin } });

@@ -7,6 +7,9 @@ const reducer = (state = initalState, action) => {
     case actionTypes.USER:
       return action.payload;
 
+    case actionTypes.CLEAR:
+      return null;
+
     default:
       return state;
   }

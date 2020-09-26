@@ -1,8 +1,8 @@
 .navbar {
   background: linear-gradient(90deg, rgb(1, 9, 17) 0%, rgb(0, 24, 41) 100%);
   height: 80px;
-  display: flex;
-  justify-content: center;
+  /* display: flex; */
+  /* justify-content: space-around; */
   align-items: center;
   font-size: 1.2rem;
   position: sticky;
@@ -12,10 +12,10 @@
 
 .navbar-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 80px;
-  max-width: 1500px;
+  max-width: 100vw;
 }
 
 .navbar-logo {
@@ -117,7 +117,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    transform: translate(25%, 50%);
+    transform: translate(25%, 25%);
   }
 
   .menu-icon {
@@ -125,7 +125,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(-100%, 60%);
+    transform: translate(-100%, 20%);
     font-size: 1.8rem;
     cursor: pointer;
   }
@@ -155,4 +155,36 @@
     color: #242424;
     transition: 250ms;
   }
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userDetails {
+  display: flex;
+  justify-content: space-around;
+}
+
+.lastLogin {
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.lastLogin span {
+  height: 20px;
+}
+
+.points {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8em;
+}
+
+.points span {
+  height: 20px;
 }

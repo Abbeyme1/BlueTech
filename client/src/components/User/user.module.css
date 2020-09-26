@@ -1,0 +1,163 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+.user {
+  width: 100vw;
+  height: 90vh;
+  box-sizing: border-box;
+  /* fallback for old browsers */
+
+  /* background: -webkit-linear-gradient(45deg, #a5bcd1, #57aeff);
+  background: -moz-linear-gradient(45deg, #a5bcd1, #57aeff);
+  background: -o-linear-gradient(45deg, #a5bcd1, #57aeff);
+  background: linear-gradient(to right, #1f8fff, #020c14);
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-repeat: no-repeat; */
+  background-color: rgb(175, 219, 255);
+}
+.card {
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
+  max-width: 95vw;
+  height: 9vh;
+  margin: 0 auto 10px;
+  /* padding: 25px; */
+  padding-left: 20px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+}
+
+.text {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+/* .pointsCard {
+  flex-grow: 0.3;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(-5px);
+} */
+
+.pointstd {
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border: none;
+}
+
+tr,
+td {
+  border: none;
+  width: 43.5%;
+}
+td,
+th {
+  padding: 0 !important;
+}
+
+.info td {
+  padding-top: 0.8% !important;
+}
+
+.heading td {
+  color: rgb(58, 13, 221);
+}
+
+.coin {
+  height: 25px;
+  width: 35px;
+  transform: translateY(5px);
+}
+
+/* .nameCard {
+  flex-grow: 0.7;
+  display: flex;
+  flex-direction: column;
+  width: 10vw;
+} */
+
+/* .lastLoginCard {
+  flex-grow: 0.2;
+  display: flex;
+  flex-direction: column;
+} */
+
+.courses {
+  width: 100vw;
+  height: 70vh;
+  /* background-color: red; */
+}
+
+.all {
+  display: flex;
+  flex-direction: row;
+  padding-top: 10vh;
+}
+
+.completed {
+  /* position: relative; */
+  z-index: 1;
+  background-color: #4caf50;
+  background-color: #43a047;
+  background-color: #81c784;
+  width: 28vw;
+  height: 40vh;
+  margin: 0 auto 10px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+}
+
+.attempted {
+  /* position: relative; */
+  z-index: 1;
+  background-color: #ffeb3b;
+  width: 28vw;
+  height: 40vh;
+  margin: 0 auto 10px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+}
+
+.todo {
+  /* position: relative; */
+  z-index: 1;
+  background-color: #ffffff;
+  width: 28vw;
+  height: 40vh;
+  margin: 0 auto 10px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .user {
+    width: 100%;
+    padding: 8% 0 0;
+    margin: auto;
+  }
+  .card {
+    width: 50vw;
+    height: 50vh;
+
+    margin: 0 auto;
+  }
+
+  .text {
+    font-size: 0.7em;
+  }
+}

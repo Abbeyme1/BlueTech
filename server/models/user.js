@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { ObjectId } = mongoose.Schema.Types;
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -21,6 +21,35 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  enrolledCourses: {
+    completed: [
+      {
+        type: ObjectId,
+        ref: "Course",
+      },
+    ],
+    attempted: [
+      {
+        type: ObjectId,
+        ref: "Course",
+        dueDate: {
+          type: Date,
+          required: true,
+        },
+      },
+    ],
+    todo: [
+      {
+        type: ObjectId,
+        ref: "Course",
+        dueDate: {
+          type: Date,
+          required: true,
+        },
+      },
+    ],
+  },
+
   resetToken: String,
   expireToken: Date,
 });
