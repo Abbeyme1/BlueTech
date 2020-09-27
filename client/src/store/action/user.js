@@ -12,3 +12,10 @@ export const clear = () => {
     type: actionTypes.CLEAR,
   };
 };
+
+export const update = (data) => {
+  return {
+    type: actionTypes.UPDATE,
+    payload: data,
+  };
+};

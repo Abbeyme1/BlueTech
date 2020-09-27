@@ -5,6 +5,10 @@ const course = new mongoose.Schema({
     type: String,
     required: true,
   },
+  points: {
+    type: Number,
+    required: true,
+  },
 });
 
 mongoose.model("Course", course);

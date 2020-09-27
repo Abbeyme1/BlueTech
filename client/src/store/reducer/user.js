@@ -10,6 +10,12 @@ const reducer = (state = initalState, action) => {
     case actionTypes.CLEAR:
       return null;
 
+    case actionTypes.UPDATE:
+      return {
+        ...state,
+        points: action.payload.points,
+      };
+
     default:
       return state;
   }

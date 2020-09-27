@@ -6,9 +6,16 @@ const Enroll = new mongoose.Schema({
     type: ObjectId,
     ref: "Course",
   },
-  name: String,
+  name: {
+    type: String,
+    required: true,
+  },
   dueDate: {
     type: Date,
+  },
+  points: {
+    type: Number,
+    required: true,
   },
 });
 

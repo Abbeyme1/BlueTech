@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import classes from "./user.module.css";
 import { connect } from "react-redux";
+import * as actionCreators from "../../store/action/index";
 
-const User = ({ user }) => {
+const User = ({ user, opUpdate }) => {
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
@@ -66,20 +67,47 @@ const User = ({ user }) => {
     }
   };
 
-  const courseSpan = (course) => {
+  const getTo = (from) => {
+    switch (from) {
+      case "todo":
+        return "attempted";
+      case "attempted":
+        return "completed";
+    }
+  };
+
+  const courseSpan = (course, to) => {
     const due = new Date(course.dueDate);
     const now = Date.now();
-    if (now > due) return null;
+    if (now > due && to != "completed") {
+      console.log("unenroll", course._id);
+      fetch("/unenroll", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("jwt"),
+        },
+        body: JSON.stringify({
+          courseId: course._id,
+        }),
+      })
+        .then((res) => res.json())
+        .then((result) => console.log("REs", result));
+      return null;
+    }
+
     const dueDate = due.getDate();
     const dueMonth = due.getMonth();
     const dueHour = due.getHours();
     const dueMinutes = due.getMinutes();
     console.log("due ", due);
     return (
-      <div>
-        <p>{course.name}</p>
+      <div style={{ backgroundColor: "wheat", marginBottom: "2px" }}>
         <p>
-          DUEDATE:{" "}
+          {course.name} {to == "completed" && -course.points}
+        </p>
+        <p>
+          {to == "completed" ? "SUMBITTED ON" : "DUEDATE"}:{" "}
           {dueDate +
             "-" +
             monthFun(dueMonth) +
@@ -88,10 +116,53 @@ const User = ({ user }) => {
             ":" +
             dueMinutes}
         </p>
-
+        <button
+          style={{ padding: "0 7px", margin: "5px 0" }}
+          onClick={() => shift(to, course._id)}
+        >
+          PRESS
+        </button>
         <br />
       </div>
     );
+  };
+
+  useEffect(() => {}, [attempted, completed, todo]);
+
+  const shift = (from, id) => {
+    console.log("shift ", id);
+    const to = getTo(from);
+    fetch("/shift", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        to,
+        from,
+        courseId: id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            name: result.name,
+            email: result.email,
+            lastLogin: result.lastLogin,
+            points: result.points,
+            _id: result._id,
+          })
+        );
+        opUpdate(result.points);
+        setAttempted(JSON.parse(JSON.stringify(result.attempted)));
+        setCompleted(JSON.parse(JSON.stringify(result.completed)));
+        setTodo(JSON.parse(JSON.stringify(result.todo)));
+        window.location.reload(false);
+      });
   };
 
   useEffect(() => {
@@ -166,21 +237,21 @@ const User = ({ user }) => {
           <div className={classes.completed}>
             {completed.length != 0
               ? completed.map((course) => {
-                  return courseSpan(course);
+                  return courseSpan(course, "completed");
                 })
               : "YOU HAVE CURRENTLY NOTHING IN THIS"}
           </div>
           <div className={classes.attempted}>
             {attempted.length != 0
               ? attempted.map((course) => {
-                  return courseSpan(course);
+                  return courseSpan(course, "attempted");
                 })
               : "YOU HAVE CURRENTLY NOTHING IN THIS"}
           </div>
           <div className={classes.todo}>
-            {todo
+            {todo.length != 0
               ? todo.map((course) => {
-                  return courseSpan(course);
+                  return courseSpan(course, "todo");
                 })
               : "YOU HAVE CURRENTLY NOTHING IN THIS"}
           </div>
@@ -196,7 +267,12 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(User);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    opUpdate: (points) => dispatch(actionCreators.update({ points: points })),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(User);
 
 {
   /* <div className={classes.text}>

@@ -5,6 +5,7 @@ const Course = mongoose.model("Course");
 
 router.post("/createCourse", (req, res) => {
   const name = req.body.name;
+  const points = req.body.points;
   console.log("making course");
 
   if (!name)
@@ -19,6 +20,7 @@ router.post("/createCourse", (req, res) => {
 
       const co = new Course({
         name,
+        points,
       });
 
       co.save().then((c) => res.json({ message: "saved successfully" }));
@@ -28,7 +30,9 @@ router.post("/createCourse", (req, res) => {
 
 router.get("/courses", (req, res) => {
   Course.find()
-    .then((courses) => res.json({ courses }))
+    .then((courses) => {
+      res.json({ courses });
+    })
     .catch((err) => console.log(err));
 });
 

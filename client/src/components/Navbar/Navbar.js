@@ -122,11 +122,6 @@ const Navbar = ({ user, onlogout }) => {
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             {user ? (
               <div className="userDetails">
-                {/* <li className="nav-item">
-                  <Link to="#" className="nav-links" onClick={logout}>
-                    LOG OUT
-                  </Link>
-                </li> */}
                 <li>
                   <div className="lastLogin">
                     <span>
@@ -149,6 +144,17 @@ const Navbar = ({ user, onlogout }) => {
                 <li className="points">
                   <span>{user.points}</span>
                   <span>POINTS</span>
+                </li>
+
+                <li className="nav-item">
+                  <Link
+                    to="#"
+                    className="nav-links"
+                    onClick={logout}
+                    style={{ backgroundColor: "red" }}
+                  >
+                    LOG OUT
+                  </Link>
                 </li>
               </div>
             ) : (

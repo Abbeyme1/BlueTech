@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classes from "./courses.module.css";
+import M from "materialize-css";
 
 const Courses = () => {
   const [courses, setCourses] = useState({});
@@ -28,7 +29,21 @@ const Courses = () => {
       }),
     })
       .then((res) => res.json())
-      .then((result) => console.log(result));
+      .then((result) => {
+        if (result.error) {
+          M.toast({
+            html: `${result.error}`,
+            classes: "#c62828 red darken-1",
+          });
+        } else {
+          M.toast({
+            html: `${result.message}`,
+            classes: "#43a047 green darken-1",
+          });
+        }
+
+        console.log(result);
+      });
   };
   return (
     <div className={classes.courses}>
@@ -36,7 +51,7 @@ const Courses = () => {
         Object.keys(courses).map((item) => {
           return (
             <h5>
-              {courses[item].name}
+              {courses[item].name} -<span>{courses[item].points}</span>
               <button onClick={() => getCourse(courses[item]._id)}>
                 CHOOSE
               </button>

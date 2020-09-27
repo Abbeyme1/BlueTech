@@ -1,1 +1,1 @@
-export { user, clear } from "./user";
+export { user, clear, update } from "./user";
