@@ -25,27 +25,19 @@ const UserSchema = new mongoose.Schema({
     completed: [
       {
         type: ObjectId,
-        ref: "Course",
+        ref: "Enroll",
       },
     ],
     attempted: [
       {
         type: ObjectId,
-        ref: "Course",
-        dueDate: {
-          type: Date,
-          required: true,
-        },
+        ref: "Enroll",
       },
     ],
     todo: [
       {
         type: ObjectId,
-        ref: "Course",
-        dueDate: {
-          type: Date,
-          required: true,
-        },
+        ref: "Enroll",
       },
     ],
   },
