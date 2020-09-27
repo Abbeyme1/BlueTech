@@ -3,13 +3,14 @@ import classes from "./user.module.css";
 import { connect } from "react-redux";
 
 const User = ({ user }) => {
-  console.log(user);
   const [date, setDate] = useState();
   const [month, setMonth] = useState();
   const [year, setYear] = useState();
   const [day, setDay] = useState();
   const [time, setTime] = useState();
-
+  const [attempted, setAttempted] = useState([]);
+  const [completed, setCompleted] = useState([]);
+  const [todo, setTodo] = useState([]);
   const monthFun = (a) => {
     switch (a) {
       case 0:
@@ -65,6 +66,51 @@ const User = ({ user }) => {
     }
   };
 
+  const courseSpan = (course) => {
+    const due = new Date(course.dueDate);
+    const now = Date.now();
+    if (now > due) return null;
+    const dueDate = due.getDate();
+    const dueMonth = due.getMonth();
+    const dueHour = due.getHours();
+    const dueMinutes = due.getMinutes();
+    console.log("due ", due);
+    return (
+      <div>
+        <p>{course.name}</p>
+        <p>
+          DUEDATE:{" "}
+          {dueDate +
+            "-" +
+            monthFun(dueMonth) +
+            "  At " +
+            dueHour +
+            ":" +
+            dueMinutes}
+        </p>
+
+        <br />
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    fetch("/userDetails", {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setCompleted(result.completed);
+        setAttempted(result.attempted);
+        setTodo(result.todo);
+      });
+  }, []);
+
   useEffect(() => {
     if (user) {
       const d = new Date(user.lastLogin);
@@ -76,9 +122,10 @@ const User = ({ user }) => {
       setTime(d.toLocaleTimeString());
     }
   }, [user]);
+
   return (
     <div className={classes.user}>
-      <div className={classes.card}>
+      {/* <div className={classes.card}>
         {user && (
           <table>
             <tr className={classes.info}>
@@ -112,13 +159,31 @@ const User = ({ user }) => {
             </tr>
           </table>
         )}
-      </div>
+      </div> */}
 
       <div className={classes.courses}>
         <div className={classes.all}>
-          <div className={classes.completed}></div>
-          <div className={classes.attempted}></div>
-          <div className={classes.todo}></div>
+          <div className={classes.completed}>
+            {completed.length != 0
+              ? completed.map((course) => {
+                  return courseSpan(course);
+                })
+              : "YOU HAVE CURRENTLY NOTHING IN THIS"}
+          </div>
+          <div className={classes.attempted}>
+            {attempted.length != 0
+              ? attempted.map((course) => {
+                  return courseSpan(course);
+                })
+              : "YOU HAVE CURRENTLY NOTHING IN THIS"}
+          </div>
+          <div className={classes.todo}>
+            {todo
+              ? todo.map((course) => {
+                  return courseSpan(course);
+                })
+              : "YOU HAVE CURRENTLY NOTHING IN THIS"}
+          </div>
         </div>
       </div>
     </div>

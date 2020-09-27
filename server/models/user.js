@@ -1,5 +1,19 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
+
+const Enroll = new mongoose.Schema({
+  _id: {
+    type: ObjectId,
+    ref: "Course",
+  },
+  name: String,
+  dueDate: {
+    type: Date,
+  },
+});
+
+mongoose.model("Enroll", Enroll);
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -21,27 +35,11 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  enrolledCourses: {
-    completed: [
-      {
-        type: ObjectId,
-        ref: "Enroll",
-      },
-    ],
-    attempted: [
-      {
-        type: ObjectId,
-        ref: "Enroll",
-      },
-    ],
-    todo: [
-      {
-        type: ObjectId,
-        ref: "Enroll",
-      },
-    ],
-  },
 
+  allCourses: [Enroll],
+  completed: [Enroll],
+  attempted: [Enroll],
+  todo: [Enroll],
   resetToken: String,
   expireToken: Date,
 });
