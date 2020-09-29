@@ -188,3 +188,45 @@
 .points span {
   height: 20px;
 }
+
+.search {
+  height: 0;
+}
+
+.searchBar {
+  color: white !important;
+}
+
+.dropdown {
+  padding: 0;
+  margin: 0;
+  max-width: 10vw;
+}
+
+.list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  max-height: 280px;
+}
+.listNavLink {
+  width: inherit;
+  background-color: #c8c8c8 !important;
+}
+.listNavLink:hover {
+  background-color: #e9e9e9 !important;
+}
+
+.list li {
+  padding-left: 15px;
+  border-bottom: 1px solid #efefef;
+  background-color: #c8c8c8;
+  flex-direction: row;
+  color: black;
+  width: 100%;
+}
+
+.list li:hover {
+  background-color: #e9e9e9;
+}

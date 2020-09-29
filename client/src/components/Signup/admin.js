@@ -25,7 +25,7 @@ const Signup = () => {
       return;
     }
 
-    fetch("/signup", {
+    fetch("/signupAdmin", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

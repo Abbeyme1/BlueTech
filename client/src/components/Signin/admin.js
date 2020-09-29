@@ -26,7 +26,7 @@ function Signin({ getUser }) {
       return;
     }
 
-    fetch("/signin", {
+    fetch("/signinAdmin", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

@@ -4,16 +4,6 @@
   width: 100vw;
   height: 90vh;
   box-sizing: border-box;
-  /* fallback for old browsers */
-
-  /* background: -webkit-linear-gradient(45deg, #a5bcd1, #57aeff);
-  background: -moz-linear-gradient(45deg, #a5bcd1, #57aeff);
-  background: -o-linear-gradient(45deg, #a5bcd1, #57aeff);
-  background: linear-gradient(to right, #1f8fff, #020c14);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-repeat: no-repeat; */
   background-color: rgb(175, 219, 255);
 }
 .card {
@@ -92,7 +82,8 @@ th {
 
 .courses {
   width: 100vw;
-  height: 70vh;
+  min-height: 70vh;
+  overflow-y: scroll;
   /* background-color: red; */
 }
 
@@ -100,6 +91,7 @@ th {
   display: flex;
   flex-direction: row;
   padding-top: 10vh;
+  overflow-y: scroll;
 }
 
 .completed {
@@ -115,6 +107,7 @@ th {
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   border-radius: 5px;
+  overflow-y: scroll;
 }
 
 .attempted {
@@ -128,10 +121,11 @@ th {
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   border-radius: 5px;
+  overflow-y: scroll;
 }
 
 .todo {
-  /* position: relative; */
+  position: relative;
   z-index: 1;
   background-color: #ffffff;
   width: 28vw;
@@ -141,6 +135,16 @@ th {
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   border-radius: 5px;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: transparent;
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -160,4 +164,69 @@ th {
   .text {
     font-size: 0.7em;
   }
+}
+
+/* !.................Admin----------------------- */
+
+.admin {
+  padding: 5vh 10vw;
+  text-align: center;
+}
+
+.admin p {
+  margin-bottom: 3vh;
+  font-size: 2em;
+  color: rgb(224, 71, 143);
+  border-bottom: 1px solid white;
+}
+
+.userCard {
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
+  max-width: 35vw;
+  height: 4vh;
+  margin: 0 auto 10px;
+  /* padding: 25px; */
+  font-size: 20px;
+  padding-left: 20px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 5px;
+}
+
+/* ............................................ */
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .completed {
+    font-size: 0.6em;
+    padding: 10px;
+  }
+
+  .attempted {
+    font-size: 0.6em;
+    padding: 10px;
+  }
+
+  .todo {
+    font-size: 0.6em;
+    padding: 10px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 }

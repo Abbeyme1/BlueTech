@@ -87,7 +87,6 @@ router.post("/unenroll", requireLogin, (req, res) => {
       }
 
       user.save();
-
       return res.json(null);
     })
     .catch((err) => res.status(422).json({ error: err }));
@@ -140,7 +139,7 @@ router.post("/shift", requireLogin, (req, res) => {
     } else if (to == "completed") {
       console.log("Shift is", shift);
       user.points += shift.points;
-      shift.dueDate = Date.now();
+      shift.dueDate = new Date.now();
       User.findByIdAndUpdate(
         req.user._id,
         { $push: { completed: shift } },
@@ -160,6 +159,30 @@ router.post("/shift", requireLogin, (req, res) => {
   });
 });
 
+router.get("/allusers", requireLogin, (req, res) => {
+  User.find()
+    .then((users) => {
+      res.json({ users });
+    })
+    .catch((err) => console.log(err));
+});
+
+router.post("/getuserDetails", requireLogin, (req, res) => {
+  User.findOne({ _id: req.body.userId })
+    .select("-password")
+    .then((user) => {
+      return res.json(user);
+    })
+    .catch((err) => console.log(err));
+});
+
+router.post("/searchUser", requireLogin, (req, res) => {
+  const user = new RegExp("^" + req.body.query);
+  User.find({ name: { $regex: user } })
+    .select("-password")
+    .then((user) => res.json({ user }))
+    .catch((err) => console.log(err));
+});
 module.exports = router;
 
 //2592000000

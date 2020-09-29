@@ -21,6 +21,8 @@ import courses from "./components/courses/courses";
 import { connect } from "react-redux";
 import * as actionCreators from "./store/action/index";
 
+import showUser from "./components/User/showUser/showUser";
+
 const App = ({ getUser }) => {
   const history = useHistory();
 
@@ -49,6 +51,7 @@ const App = ({ getUser }) => {
         <Route path="/reset" exact component={Reset} />
         <Route path="/courses" component={courses} />
         <Route path="/user" exact component={UserPage} />
+        <Route path="/showUser/:userId" component={showUser} />
         <Route path="/reset/:token" component={newPassword} />
       </Switch>
     </>

@@ -14,6 +14,8 @@ const Navbar = ({ user, onlogout }) => {
   const [year, setYear] = useState();
   const [day, setDay] = useState();
   const [time, setTime] = useState();
+  const [searchUser, setSearchUser] = useState("");
+  const [userList, setUserList] = useState([]);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -109,78 +111,189 @@ const Navbar = ({ user, onlogout }) => {
     }
   }, [user]);
 
+  const findUsers = (user) => {
+    setSearchUser(user);
+    fetch("/searchUser", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        query: user,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setUserList(result.user);
+      });
+  };
+
   return (
     <>
       <nav className="navbar">
-        <div className="navbar-container">
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-            BlueTech
-          </Link>
-          <div className="menu-icon" onClick={handleClick}>
-            <i className={click ? "fas fa-times" : "fas fa-bars"} />
+        {user && user.lastLogin ? (
+          // FOR USER
+          <div className="navbar-container">
+            <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+              BlueTech
+            </Link>
+            <div className="menu-icon" onClick={handleClick}>
+              <i className={click ? "fas fa-times" : "fas fa-bars"} />
+            </div>
+            <ul className={click ? "nav-menu active" : "nav-menu"}>
+              {user ? (
+                <div className="userDetails">
+                  <li className="user">
+                    {/* // TO ENROLL IN COURSES */}
+                    <NavLink to="/courses" className="user">
+                      <span>Courses</span>
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <div className="lastLogin">
+                      <span>
+                        <span>{day},</span>
+                        <span>{date}-</span>
+                        <span>{month}-</span>
+                        <span>{year}</span>
+                      </span>
+
+                      <span> {time}</span>
+                    </div>
+                  </li>
+
+                  <li className="user">
+                    <NavLink to="/user" className="user">
+                      <span>{user.name}</span>
+                    </NavLink>
+                  </li>
+
+                  <li className="points">
+                    <span>{user.points}</span>
+                    <span>POINTS</span>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link
+                      to="#"
+                      className="nav-links"
+                      onClick={logout}
+                      style={{ backgroundColor: "red" }}
+                    >
+                      LOG OUT
+                    </Link>
+                  </li>
+                </div>
+              ) : (
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to="/signin"
+                      className="nav-links"
+                      onClick={closeMobileMenu}
+                    >
+                      SIGN IN
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      to="/signup"
+                      className="nav-links"
+                      onClick={closeMobileMenu}
+                    >
+                      SIGN UP
+                    </Link>
+                  </li>
+                </div>
+              )}
+            </ul>
           </div>
-          <ul className={click ? "nav-menu active" : "nav-menu"}>
-            {user ? (
-              <div className="userDetails">
-                <li>
-                  <div className="lastLogin">
-                    <span>
-                      <span>{day},</span>
-                      <span>{date}-</span>
-                      <span>{month}-</span>
-                      <span>{year}</span>
-                    </span>
+        ) : (
+          // FOR ADMIN
 
-                    <span> {time}</span>
-                  </div>
-                </li>
+          <div className="navbar-container">
+            <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
+              BlueTech
+            </Link>
+            <div className="menu-icon" onClick={handleClick}>
+              <i className={click ? "fas fa-times" : "fas fa-bars"} />
+            </div>
+            <ul className={click ? "nav-menu active" : "nav-menu"}>
+              {user ? (
+                <div className="userDetails">
+                  <li className="search">
+                    <input
+                      type="text"
+                      className="searchBar"
+                      placeholder="Search User"
+                      value={searchUser}
+                      onChange={(e) => findUsers(e.target.value)}
+                    />
+                    <div className="dropdown">
+                      {searchUser && userList && (
+                        <ul class="list">
+                          {userList.map((user) => {
+                            return (
+                              <Link
+                                to={`/showUser/${user._id}`}
+                                className="listNavLink"
+                              >
+                                <li>
+                                  <span className="searchName">
+                                    {user.name}
+                                  </span>
+                                </li>
+                              </Link>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </div>
+                  </li>
+                  <li className="user">
+                    <NavLink to="/user" className="user">
+                      <span>{user.name}</span>
+                    </NavLink>
+                  </li>
 
-                <li className="user">
-                  <NavLink to="/user" className="user">
-                    <span>{user.name}</span>
-                  </NavLink>
-                </li>
-
-                <li className="points">
-                  <span>{user.points}</span>
-                  <span>POINTS</span>
-                </li>
-
-                <li className="nav-item">
-                  <Link
-                    to="#"
-                    className="nav-links"
-                    onClick={logout}
-                    style={{ backgroundColor: "red" }}
-                  >
-                    LOG OUT
-                  </Link>
-                </li>
-              </div>
-            ) : (
-              <div>
-                <li className="nav-item">
-                  <Link
-                    to="/signin"
-                    className="nav-links"
-                    onClick={closeMobileMenu}
-                  >
-                    SIGN IN
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    to="/signup"
-                    className="nav-links"
-                    onClick={closeMobileMenu}
-                  >
-                    SIGN UP
-                  </Link>
-                </li>
-              </div>
-            )}
-          </ul>
-        </div>
+                  <li className="nav-item">
+                    <Link
+                      to="#"
+                      className="nav-links"
+                      onClick={logout}
+                      style={{ backgroundColor: "red" }}
+                    >
+                      LOG OUT
+                    </Link>
+                  </li>
+                </div>
+              ) : (
+                <div>
+                  <li className="nav-item">
+                    <Link
+                      to="/signin"
+                      className="nav-links"
+                      onClick={closeMobileMenu}
+                    >
+                      SIGN IN
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      to="/signup"
+                      className="nav-links"
+                      onClick={closeMobileMenu}
+                    >
+                      SIGN UP
+                    </Link>
+                  </li>
+                </div>
+              )}
+            </ul>
+          </div>
+        )}
       </nav>
     </>
   );
